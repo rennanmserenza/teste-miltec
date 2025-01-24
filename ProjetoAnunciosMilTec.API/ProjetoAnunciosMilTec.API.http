@@ -1,0 +1,6 @@
+@ProjetoAnunciosMilTec.API_HostAddress = http://localhost:5185
+
+GET {{ProjetoAnunciosMilTec.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
