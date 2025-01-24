@@ -5,12 +5,12 @@ using ProjetoAnunciosMilTec.Repository.Interfaces;
 
 namespace ProjetoAnunciosMilTec.Repository.Repositories;
 
-public class Repository<T> : IRepository<T> where T : Anuncio
+public abstract class AnuncioRepository<T> : IAnuncioRepository<T> where T : Anuncio
 {
     protected readonly AnunciosDbContext _context;
     private readonly DbSet<T> _dbSet;
 
-    public Repository(AnunciosDbContext context)
+    protected AnuncioRepository(AnunciosDbContext context)
     {
         _context = context;
         _dbSet = _context.Set<T>();

@@ -2,6 +2,6 @@
 
 namespace ProjetoAnunciosMilTec.Repository.Interfaces;
 
-public interface IServicoRepository : IRepository<Servico>
+public interface IServicoRepository : IAnuncioRepository<Servico>
 {
 }
