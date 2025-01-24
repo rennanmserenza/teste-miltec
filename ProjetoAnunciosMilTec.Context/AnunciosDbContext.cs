@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ProjetoAnunciosMilTec.Context;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+public class AnunciosDbContext(DbContextOptions<AnunciosDbContext> options) : DbContext(options)
 {
     public DbSet<Produto> Produtos { get; set; } = null!;
     public DbSet<Servico> Servicos { get; set; } = null!;

@@ -1,6 +1,5 @@
-namespace ProjetoAnunciosMilTec.Entity.Models
+namespace ProjetoAnunciosMilTec.Entity.Models;
+
+public class Servico : Anuncio
 {
-    public class Servico : Anuncio
-    {
-    }
 }
