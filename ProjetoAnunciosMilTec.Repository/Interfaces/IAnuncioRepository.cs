@@ -2,7 +2,7 @@
 
 namespace ProjetoAnunciosMilTec.Repository.Interfaces;
 
-public interface IRepository<T> where T : Anuncio
+public interface IAnuncioRepository<T> where T : Anuncio
 {
     Task<T?> GetByIdAsync(long id);
 
