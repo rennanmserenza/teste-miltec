@@ -1,4 +1,4 @@
-namespace ProjetoAnunciosMilTec.Entity.Models;
+namespace ProjetoAnunciosMilTec.Core.Models;
 
 public class Servico : Anuncio
 {

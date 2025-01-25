@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ProjetoAnunciosMilTec.Entity.Models;
+namespace ProjetoAnunciosMilTec.Core.Models;
 
 public class Produto : Anuncio
 {
