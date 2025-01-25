@@ -1,4 +1,4 @@
-﻿using ProjetoAnunciosMilTec.Entity.Models;
+﻿using ProjetoAnunciosMilTec.Core.Models;
 
 namespace ProjetoAnunciosMilTec.Service.Interfaces;
 

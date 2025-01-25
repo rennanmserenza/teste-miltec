@@ -1,4 +1,4 @@
-﻿using ProjetoAnunciosMilTec.Entity.Models;
+﻿using ProjetoAnunciosMilTec.Core.Models;
 using ProjetoAnunciosMilTec.Repository.Interfaces;
 using ProjetoAnunciosMilTec.Service.Interfaces;
 

@@ -1,8 +1,9 @@
-﻿using ProjetoAnunciosMilTec.Entity.Models;
+﻿using ProjetoAnunciosMilTec.Core.Models;
+using ProjetoAnunciosMilTec.Core.Request.Produtos;
 
 namespace ProjetoAnunciosMilTec.Service.Interfaces;
 
 public interface IProdutoService : IAnuncioService<Produto>
 {
-    new Task CriarAsync(Produto produto);
+    Task CriarAsync(CreateProdutoRequest produto);
 }
