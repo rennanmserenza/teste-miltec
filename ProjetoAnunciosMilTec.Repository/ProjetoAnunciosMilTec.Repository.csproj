@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjetoAnunciosMilTec.Entity\ProjetoAnunciosMilTec.Entity.csproj" />
+    <ProjectReference Include="..\ProjetoAnunciosMilTec.Entity\ProjetoAnunciosMilTec.Core.csproj" />
     <ProjectReference Include="..\ProjetoAnunciosMilTec.Context\ProjetoAnunciosMilTec.Context.csproj" />
   </ItemGroup>
 
