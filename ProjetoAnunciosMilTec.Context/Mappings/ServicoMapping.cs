@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProjetoAnunciosMilTec.Entity.Models;
+using ProjetoAnunciosMilTec.Core.Models;
 
 namespace ProjetoAnunciosMilTec.Context.Mappings;
 

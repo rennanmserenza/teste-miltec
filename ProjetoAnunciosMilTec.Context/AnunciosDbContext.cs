@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ProjetoAnunciosMilTec.Entity.Models;
+using ProjetoAnunciosMilTec.Core.Models;
 using System.Reflection;
 
 namespace ProjetoAnunciosMilTec.Context;

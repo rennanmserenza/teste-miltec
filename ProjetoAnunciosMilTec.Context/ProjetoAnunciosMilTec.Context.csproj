@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjetoAnunciosMilTec.Entity\ProjetoAnunciosMilTec.Entity.csproj" />
+    <ProjectReference Include="..\ProjetoAnunciosMilTec.Entity\ProjetoAnunciosMilTec.Core.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
