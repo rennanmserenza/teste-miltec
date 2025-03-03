@@ -1,4 +1,5 @@
 using ProjetoAnunciosMilTec.API.Archietecture;
+using ProjetoAnunciosMilTec.API.EndPoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,5 +15,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapEndPoints();
 
 app.Run();
