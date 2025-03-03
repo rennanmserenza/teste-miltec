@@ -21,7 +21,7 @@ public class BaseFormRequest
     [Required(ErrorMessage = "Selecione uma cidade válida.")]
     public string Cidade { get; set; } = string.Empty;
 
-    public static ValidationResult? ValidarDataPublicacao(DateTime data, ValidationContext context)
+    public static ValidationResult? ValidarDataPublicacao(DateTime data)
     {
         return data >= DateTime.Today
             ? ValidationResult.Success
