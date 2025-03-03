@@ -1,4 +1,6 @@
-﻿using ProjetoAnunciosMilTec.Repository.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjetoAnunciosMilTec.Context;
+using ProjetoAnunciosMilTec.Repository.Interfaces;
 using ProjetoAnunciosMilTec.Repository.Repositories;
 using ProjetoAnunciosMilTec.Service.Interfaces;
 using ProjetoAnunciosMilTec.Service.Services;
@@ -9,11 +11,29 @@ namespace ProjetoAnunciosMilTec.API.Archietecture
     {
         public static WebApplicationBuilder ConfigureBuilder(this WebApplicationBuilder builder)
         {
+            builder.DataBaseConfiguration();
+
             builder.DependencyInjectionConfiguration();
             builder.OpenApiConfiguration();
 
             return builder;
         }
+
+        #region Database Configuration
+
+        private static WebApplicationBuilder DataBaseConfiguration(this WebApplicationBuilder builder)
+        {
+            var cnStr = builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
+
+            builder.Services.AddDbContext<AnunciosDbContext>(options =>
+            {
+                options.UseSqlServer(cnStr);
+            });
+
+            return builder;
+        }
+
+        #endregion Database Configuration
 
         #region DI Configuration
 
@@ -52,7 +72,10 @@ namespace ProjetoAnunciosMilTec.API.Archietecture
             // Add services to the container.
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(x =>
+            {
+                x.CustomSchemaIds(n => n.FullName);
+            });
 
             return builder;
         }
