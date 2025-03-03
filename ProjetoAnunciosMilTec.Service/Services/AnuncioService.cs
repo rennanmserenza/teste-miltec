@@ -1,37 +1,99 @@
-﻿using ProjetoAnunciosMilTec.Core.Models;
-using ProjetoAnunciosMilTec.Repository.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjetoAnunciosMilTec.Context;
+using ProjetoAnunciosMilTec.Core.Models;
+using ProjetoAnunciosMilTec.Core.Responses;
 using ProjetoAnunciosMilTec.Service.Interfaces;
 
-namespace ProjetoAnunciosMilTec.Service.Services
+namespace ProjetoAnunciosMilTec.Service.Services;
+
+public abstract class AnuncioService<T>(AnunciosDbContext context)
+    : BaseService<T>(context), IAnuncioService<T> where T : Anuncio
 {
-    public abstract class AnuncioService<T>(IAnuncioRepository<T> baseRepository)
-        : IAnuncioService<T> where T : Anuncio
+    public async Task<PagedResponse<List<T>?>> ObterTodosAsync
+        (int pageNumber, int skip = 0, int take = 25)
     {
-        private readonly IAnuncioRepository<T> _baseRepository = baseRepository;
-
-        public async Task<IEnumerable<T>> ObterTodosAsync()
+        try
         {
-            return await _baseRepository.GetAllAsync();
+            var query = base.ObterTodos();
+
+            var values = await query.Skip(skip).Take(take).ToListAsync();
+
+            int total = await query.CountAsync();
+
+            return new PagedResponse<List<T>?>(values, total, pageNumber, take);
         }
-
-        public async Task<T?> ObterPorIdAsync(long id)
+        catch (Exception ex)
         {
-            return await _baseRepository.GetByIdAsync(id);
+            Console.WriteLine(ex.Message);
+            return new PagedResponse<List<T>?>(null, 500, "Erro ao tentar consultar os dados da tabela.");
         }
+    }
 
-        public async Task CriarAsync(T anuncio)
+    public async Task<BaseResponse<T?>> ObterPorIdAsync(long id)
+    {
+        var obj = await base.ObterPorIdAsync(id);
+
+        return obj is not null
+            ? new BaseResponse<T?>(obj)
+            : new BaseResponse<T?>(null, 404, "O anuncio não foi encontrado.");
+    }
+
+    public new async Task<BaseResponse<T?>> CriarAsync(T anuncio)
+    {
+        try
         {
-            await _baseRepository.AddAsync(anuncio);
+            var obj = await base.CriarAsync(anuncio);
+            return new BaseResponse<T?>(obj, 201, "Anuncio criado com sucesso.");
         }
-
-        public async Task AtualizarAsync(T anuncio)
+        catch (DbUpdateException ex)
         {
-            await _baseRepository.UpdateAsync(anuncio);
+            Console.WriteLine(ex.Message);
+            return new BaseResponse<T?>(null, 500, "Não foi possível criar um novo anuncio.");
         }
+    }
 
-        public async Task ExcluirAsync(long id)
+    public new async Task<BaseResponse<T?>> AtualizarAsync(T anuncio)
+    {
+        try
         {
-            await _baseRepository.DeleteAsync(id);
+            var obj = await base.ObterPorIdAsync(anuncio.Id);
+
+            if (obj is null)
+                return new BaseResponse<T?>(null, 404, "O anuncio não foi encontrado.");
+
+            obj.Nome = anuncio.Nome;
+            obj.Valor = anuncio.Valor;
+            obj.Cidade = anuncio.Cidade;
+            obj.DataPublicacao = anuncio.DataPublicacao;
+
+            await base.AtualizarAsync(obj);
+
+            return new BaseResponse<T?>(obj, message: "Categoria alterada com sucesso.");
+        }
+        catch (DbUpdateException ex)
+        {
+            Console.WriteLine(ex.Message);
+            return new BaseResponse<T?>(null, 500, "Não foi possível anterar o anuncio.");
+        }
+    }
+
+    public async Task<BaseResponse<T?>> ExcluirAsync(long id)
+    {
+        try
+        {
+            var entity = await base.ObterPorIdAsync(id);
+
+            if (entity is null)
+                return new BaseResponse<T?>(null, 404, "Anuncio não encontrado.");
+
+            await base.ExcluirAsync(entity);
+
+            return new BaseResponse<T?>(entity, message: "Anuncio removido com sucesso.");
+        }
+        catch (DbUpdateException ex)
+        {
+            Console.WriteLine(ex.Message);
+            return new BaseResponse<T?>(null, 500, "Não foi possível remover o anuncio.");
         }
     }
 }

@@ -1,16 +1,17 @@
 ﻿using ProjetoAnunciosMilTec.Core.Models;
+using ProjetoAnunciosMilTec.Core.Responses;
 
 namespace ProjetoAnunciosMilTec.Service.Interfaces;
 
-public interface IAnuncioService<T> where T : Anuncio
+public interface IAnuncioService<T> : IBaseService<T> where T : Anuncio
 {
-    Task<IEnumerable<T>> ObterTodosAsync();
+    Task<PagedResponse<List<T>?>> ObterTodosAsync(int pageNumber, int skip = 0, int take = 25);
 
-    Task<T?> ObterPorIdAsync(long id);
+    Task<BaseResponse<T?>> ObterPorIdAsync(long id);
 
-    Task CriarAsync(T anuncio);
+    Task<BaseResponse<T?>> CriarAsync(T anuncio);
 
-    Task AtualizarAsync(T anuncio);
+    Task<BaseResponse<T?>> AtualizarAsync(T anuncio);
 
-    Task ExcluirAsync(long id);
+    Task<BaseResponse<T?>> ExcluirAsync(long id);
 }
